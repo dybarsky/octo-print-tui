@@ -3,6 +3,7 @@ package network
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import domain.Current
 import domain.State
+import domain.Version
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -33,10 +34,17 @@ class Client(url: String, apiKey: String) {
             .build()
             .create(Api::class.java)
 
-    suspend fun getVersion(): String {
-        return ""
+    // todo log fails
+    suspend fun getVersion(): Version? {
+        val response = api.version()
+        return when {
+            response.isSuccessful.not() -> null
+            response.body() == null -> null
+            else -> requireNotNull(response.body())
+        }
     }
 
+    // todo log fails
     suspend fun getCurrent(): Current {
         val response = api.job()
         return when {
