@@ -1,0 +1,22 @@
+#IntelliJ IDEA
+/shelf/
+/workspace.xml
+.idea/*
+*.idea
+*.iml
+*.ipr
+*.iws
+classes
+gen-external-apklibs
+
+#Gradle
+gradle.properties
+.gradle
+build
+
+#Other
+/local.properties
+.DS_Store
+tmp
+*.tmp
+*.bak
