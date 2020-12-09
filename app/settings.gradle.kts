@@ -1,2 +1,2 @@
-rootProject.name = "octo-print tui"
+rootProject.name = "octo-print-tui"
 rootProject.buildFileName = "build.gradle.kts"
