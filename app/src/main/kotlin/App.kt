@@ -1,22 +1,21 @@
 @file:JvmName("App")
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import network.Client
 import util.Config
-import kotlin.system.exitProcess
+import util.Log
 
-fun main(args: Array<String>): Unit = runBlocking {
-    val (url, key) = Config.instance()
-    val client = Client(url, key)
+fun main(args: Array<String>): Unit =
+    runBlocking {
+        Log.reset()
 
+        val (url, key, gap) = Config.instance()
+        val client = Client(url, key)
 
-
-
-    val current = client.getCurrent()
-    println(current)
-
-    val version = client.getVersion()
-    println(version)
-
-    exitProcess(0)
-}
+        while (true) {
+            println(client.getVersion())
+            println(client.getCurrent())
+            delay(gap.toLong() * 1000)
+        }
+    }
