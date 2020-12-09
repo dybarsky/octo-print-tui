@@ -8,7 +8,9 @@ import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
+import util.Log
 
 class Client(url: String, apiKey: String) {
 
@@ -34,23 +36,16 @@ class Client(url: String, apiKey: String) {
             .build()
             .create(Api::class.java)
 
-    // todo log fails
-    suspend fun getVersion(): Version? {
-        val response = api.version()
-        return when {
-            response.isSuccessful.not() -> null
-            response.body() == null -> null
-            else -> requireNotNull(response.body())
-        }
-    }
+    suspend fun getVersion(): Version? = api.version().bodyOrNull()
 
-    // todo log fails
-    suspend fun getCurrent(): Current {
-        val response = api.job()
-        return when {
-            response.isSuccessful.not() -> fail
-            response.body() == null -> fail
-            else -> requireNotNull(response.body())
+    suspend fun getCurrent(): Current = api.job().bodyOrNull() ?: fail
+
+    private fun <T> Response<T>.bodyOrNull(): T? =
+        when {
+            isSuccessful.not() -> { printErrorCode(); null }
+            body() == null -> { printErrorCode(); null }
+            else -> requireNotNull(body())
         }
-    }
+
+    private fun <T> Response<T>.printErrorCode() = Log.append("Http request failed: ${this.code()}")
 }
