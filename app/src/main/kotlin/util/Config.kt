@@ -14,7 +14,7 @@ data class Config private constructor(
         private const val PROP_KEY = "key"
         private const val PROP_GAP = "gap"
 
-        private const val DEFAULT_TIME = 60 // seconds
+        private const val DEFAULT_TIME = 1 // seconds
         private const val FALLBACK_URL = "http://octopi.local"
         private const val CONFIG_PATH = "/.config/octo-print-tui"
 
