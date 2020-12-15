@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Job(
     val file: File,
-    val estimatedPrintTime: Int?,
+    val filament: Filament?,
+    val estimatedPrintTime: Double?,
 )
