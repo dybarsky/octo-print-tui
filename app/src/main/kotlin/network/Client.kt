@@ -11,6 +11,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import util.Log
+import java.net.SocketTimeoutException
+import java.util.concurrent.TimeUnit
 
 class Client(url: String, apiKey: String) {
 
@@ -26,6 +28,7 @@ class Client(url: String, apiKey: String) {
     }
 
     private val http = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
             .build()
 
@@ -36,9 +39,19 @@ class Client(url: String, apiKey: String) {
             .build()
             .create(Api::class.java)
 
-    suspend fun getVersion(): Version? = api.version().bodyOrNull()
+    suspend fun getVersion(): Version? =
+        try {
+            api.version().bodyOrNull()
+        } catch(_ : SocketTimeoutException) {
+            null
+        }
 
-    suspend fun getCurrent(): Current = api.job().bodyOrNull() ?: fail
+    suspend fun getCurrent(): Current =
+        try {
+            api.job().bodyOrNull() ?: fail
+        } catch(_ : SocketTimeoutException) {
+            fail
+        }
 
     private fun <T> Response<T>.bodyOrNull(): T? =
         when {
