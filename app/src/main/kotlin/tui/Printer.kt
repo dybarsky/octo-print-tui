@@ -71,6 +71,8 @@ object Printer {
         val status = when (state) {
             State.Operational -> "idle".green().bold()
             State.Printing -> "printing".blue().bold()
+            State.Starting -> "starting".magenta().bold()
+            State.Finishing -> "finishing".magenta().bold()
             State.Paused -> "pause".yellow().bold()
             State.Pausing -> "pause".yellow().bold()
             State.Cancelling -> "cancel".yellow().bold().dim()
