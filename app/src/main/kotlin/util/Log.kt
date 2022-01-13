@@ -4,7 +4,7 @@ import java.io.File
 
 object Log {
 
-    private val file = File("${System.getenv("TMP")}/octo-print-tui.append")
+    private val file = File("${System.getenv("TMPDIR")}/octo-print-tui.append")
 
     val redirect: ProcessBuilder.Redirect = ProcessBuilder.Redirect.appendTo(file)
 
