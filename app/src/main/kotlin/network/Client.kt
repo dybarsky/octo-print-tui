@@ -39,14 +39,14 @@ class Client(url: String, apiKey: String) {
             .create(Api::class.java)
 
     suspend fun getVersion(): Version? =
-        runCatching {
-            api.version().bodyOrNull()
-        }.getOrNull()
+        runCatching { api.version().bodyOrNull() }
+            .onFailure { Log.panic(it) }
+            .getOrNull()
 
     suspend fun getCurrent(): Current =
-        runCatching {
-            api.job().bodyOrNull() ?: fail
-        }.getOrDefault(fail)
+        runCatching { api.job().bodyOrNull() ?: fail }
+            .onFailure { Log.panic(it) }
+            .getOrDefault(fail)
 
     private fun <T> Response<T>.bodyOrNull(): T? =
         when {
