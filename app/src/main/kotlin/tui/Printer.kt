@@ -106,7 +106,7 @@ object Printer {
     }
 
     private fun getFilamentMessage(filament: Filament?) = buildString {
-        val meters = filament?.tool0?.length?.div(1000)
+        val meters = filament?.length?.div(1000)
         val filamentMessage = meters?.let { "%.2f m".format(it).white() } ?: dash()
         append(CHAR_PADDING)
         append("Filament: ".cyan())
