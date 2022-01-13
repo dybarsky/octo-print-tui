@@ -16,8 +16,7 @@ fun main(args: Array<String>): Unit =
         val client = Client(url, key)
 
         while (true) {
-            val current = client.getCurrent()
-            Printer.print(current)
+            client.getCurrent().run(Printer::print)
             delay(gap.toLong() * 1000)
         }
     }

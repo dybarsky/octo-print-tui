@@ -11,14 +11,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import util.Log
-import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
 class Client(url: String, apiKey: String) {
 
     private val fail = Current(State.Unknown.name)
 
-    private val json =  Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType())
+    private val json = Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType())
 
     private val interceptor = Interceptor {
         val request = it.request()
@@ -40,18 +39,14 @@ class Client(url: String, apiKey: String) {
             .create(Api::class.java)
 
     suspend fun getVersion(): Version? =
-        try {
+        runCatching {
             api.version().bodyOrNull()
-        } catch(_ : SocketTimeoutException) {
-            null
-        }
+        }.getOrNull()
 
     suspend fun getCurrent(): Current =
-        try {
+        runCatching {
             api.job().bodyOrNull() ?: fail
-        } catch(_ : SocketTimeoutException) {
-            fail
-        }
+        }.getOrDefault(fail)
 
     private fun <T> Response<T>.bodyOrNull(): T? =
         when {
