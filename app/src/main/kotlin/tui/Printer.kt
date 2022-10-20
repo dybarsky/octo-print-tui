@@ -1,11 +1,6 @@
 package tui
 
-import domain.Current
-import domain.Filament
-import domain.File
-import domain.Progress
-import domain.State
-import domain.Version
+import domain.*
 import java.util.concurrent.TimeUnit
 
 object Printer {
@@ -106,7 +101,7 @@ object Printer {
     }
 
     private fun getFilamentMessage(filament: Filament?) = buildString {
-        val meters = filament?.length?.div(1000)
+        val meters = filament?.tool0?.length?.div(1000)
         val filamentMessage = meters?.let { "%.2f m".format(it).white() } ?: dash()
         append(CHAR_PADDING)
         append("Filament: ".cyan())
