@@ -26,7 +26,7 @@ object Printer {
     private const val CHAR_NONE = "-"
     private const val CHAR_PADDING = "  "
     private const val CHAR_BLOCK_LIGHT = "░"
-    private const val CHAR_BLOCK_HEAVY = "▓"
+    private const val CHAR_BLOCK_HEAVY = "█"
 
     private const val BAR_LENGTH = 25
 
