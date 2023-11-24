@@ -28,7 +28,7 @@ data class Config private constructor(
             }
             val gap = properties.getProperty(PROP_GAP)?.toIntOrNull() ?: DEFAULT_TIME
             val url = properties.getProperty(PROP_URL) ?: FALLBACK_URL
-            val key = properties.getProperty(PROP_KEY) ?: ""
+            val key = properties.getProperty(PROP_KEY) ?: "921F3370624D4B24A1EC647BC06D96EC"
             return Config(url, key, gap)
         }
     }

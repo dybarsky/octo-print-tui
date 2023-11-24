@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit
 
 class Client(url: String, apiKey: String) {
 
-    private val fail = Current(State.Unknown.name)
+    private val fail by lazy { Current(State.Unknown.name) }
 
-    private val json = Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType())
+    private val json by lazy { Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType()) }
 
     private val interceptor = Interceptor {
         val request = it.request()

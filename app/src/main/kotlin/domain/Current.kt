@@ -6,9 +6,14 @@ import kotlinx.serialization.Transient
 
 @Serializable
 data class Current(
+
     @SerialName("state")
     private val raw: String,
+
+    @SerialName("job")
     val job: Job? = null,
+
+    @SerialName("progress")
     val progress: Progress? = null,
 ) {
 
