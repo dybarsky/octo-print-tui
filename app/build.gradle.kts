@@ -1,9 +1,23 @@
+import org.gradle.api.JavaVersion.VERSION_11
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+
 plugins {
 	val kotlinVersion = "1.9.20"
 	kotlin("jvm") version kotlinVersion
 	kotlin("plugin.serialization") version kotlinVersion
 	id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 	application
+}
+
+kotlin {
+	compilerOptions {
+		jvmTarget = JVM_11
+	}
+}
+
+java {
+	sourceCompatibility = VERSION_11
+	targetCompatibility = VERSION_11
 }
 
 application {
